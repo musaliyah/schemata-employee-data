@@ -3,13 +3,22 @@ const express = require('express');
 const mysql = require('mysql2');
 const consoleTbl = require('console.table');
 
-
 const PORT = process.env.PORT || 3001;
-const app = express();
-
-app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+function questions() {
+    inquirer.prompt([
+        {
+            type: "list",
+            message: "What would you like to do?",
+            choices: [
+                "View All Employees",
+                ""
+            ]
+        }
+    ])
+}
 //View all departments 
 //SELECT * FROM department;
 

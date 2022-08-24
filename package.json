@@ -1,0 +1,23 @@
+{
+  "name": "schemata-employee-data",
+  "version": "1.0.0",
+  "description": "## Your Task",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/musaliyah/schemata-employee-data.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/musaliyah/schemata-employee-data/issues"
+  },
+  "homepage": "https://github.com/musaliyah/schemata-employee-data#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4"
+  }
+}
