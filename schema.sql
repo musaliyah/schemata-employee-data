@@ -8,14 +8,15 @@ CREATE TABLE department (
     name VARCHAR(30) NOT NULL
 );
 
-CREATE TABLE role (
+CREATE TABLE roles (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(30) NOT NULL,
     salary DECIMAL,
     department_id INT,
     FOREIGN KEY (department_id)
         REFERENCES department (id)
-        ON DELETE SET NULL
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 
@@ -27,11 +28,13 @@ CREATE TABLE employee (
     manager_id INT NULL,
 
     FOREIGN KEY (role_id)
-        REFERENCES role(id)
-        ON DELETE SET NULL,
+        REFERENCES roles(id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE,
 
     FOREIGN KEY (manager_id)
     REFERENCES employee(id)
     ON DELETE SET NULL
+    ON UPDATE CASCADE
 )
 
