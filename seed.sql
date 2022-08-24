@@ -1,5 +1,5 @@
 INSERT INTO department (department_name)
-VALUE
+VALUE 
 INSERT INTO department (department_name)
 VALUE
 INSERT INTO department (department_name)
