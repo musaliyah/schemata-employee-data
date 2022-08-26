@@ -43,7 +43,20 @@ function app() {
                 "Exit Application"
             ]
         }
-    ]).then((answer))
+    ]).then((response) => {
+        switch(response.start) {
+            case "View All Employees":
+                viewEmployees();
+                break;
+            case "Add Employee":
+                addEmployees();
+                break;
+            case "Update Employee Role":
+                updateEmployees();
+                break;
+            case
+        }
+    })
 }
 
 //I spent way too long trying to decide what cFont layout I wanted to use lol, please know I put my whole heart into this selection :D 
