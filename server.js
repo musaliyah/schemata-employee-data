@@ -13,6 +13,11 @@ const db = mysql.createConnection({
     database: 'employee_DB'
 
 });
+// askbcs tutor (Mia) 
+db.connect(function (err) {
+    if (err) throw err;
+    app();
+  });
 //https://www.npmjs.com/package/cfonts
 cfonts.say('Schemata,|my|Employee|Data!', {
     font: 'slick',
@@ -27,7 +32,7 @@ cfonts.say('Schemata,|my|Employee|Data!', {
 
 
 function app() {
-    inquirer.createPromptModule([
+    inquirer.prompt([
         {
             type: 'list',
             message: 'What would you like to do?',
@@ -70,7 +75,8 @@ function app() {
                 exit();
                 break;
             default:
-                throw new Error("Unrecognized selection");
+                db.end();
+                break;
         }
     })
 }
@@ -110,25 +116,36 @@ function addEmployees() {
                 type: 'list',
                 message: 'Choose employee role: ',
                 name: 'role_id',
-                choice: roles
+                choice: role
             },
             {
                 type: 'list',
                 message: 'Choose the manager of the employee',
-                choices: employees
+                choices: employee
             },
 
         ]).then((res) => {
-            const {
-                first_name,
-                last_name
-            } = res;
+            const {first_name, last_name} = res;
             const role_id = role.filter(role => {
                 return role.title === role;
             }) [0];
             const manager = res.filter(employee => {
-                return employee.first_name + last_name.name === res.manager;
-            })
+                return employee.first_name + employee.last_name === res.manager;
+            }) [0];
+            const manager_id = manager ? manager.id : null;
+            db.query('add employee', 
+            {
+                first_name,
+                last_name,
+                role_id, 
+                manager_id
+            },
+            (err, result) => {
+                if (err)
+                throw err;
+            }
+
+            )
             app();
         })
     })
