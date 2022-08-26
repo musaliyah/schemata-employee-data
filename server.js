@@ -1,12 +1,36 @@
 const inquirer = require('inquirer');
 const express = require('express');
-const mysql = require('mysql2');
+const mysql = require('mysql');
 const consoleTbl = require('console.table');
-const CFonts = require('cfonts')
+const cfonts = require('cfonts');
+
 
 const db = mysql.createConnection({
-    host: 'localhost'
-// })
+    host: 'localhost',
+    port: '3001',
+    user: 'root',
+    password: 'teddyfreddy',
+    database: 'employee_DB'
+
+});
+//https://www.npmjs.com/package/cfonts
+cfonts.say('Schemata,|my|Employee|Data!', {
+    font: 'slick',
+    align: 'center',
+    colors: ['#F2D2BD', '#93C572'],
+    background: '#4A0404',
+    letterSpacing: 1,
+    lineHeight: 1, 
+    space: true,
+    maxLength: '0',
+}); 
+
+
+function app()
+
+//I spent way too long trying to decide what cFont layout I wanted to use lol, please know I put my whole heart into this selection :D 
+
+
 // const questions = () => {
 //     inquirer.prompt([
 //         {
