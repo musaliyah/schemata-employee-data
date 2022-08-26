@@ -123,6 +123,13 @@ function addEmployees() {
                 first_name,
                 last_name
             } = res;
+            const role_id = role.filter(role => {
+                return role.title === role;
+            }) [0];
+            const manager = res.filter(employee => {
+                return employee.first_name + last_name.name === res.manager;
+            })
+            app();
         })
     })
     })
