@@ -42,8 +42,8 @@ function app() {
                 "View All Employees", //added
                 "Add Employee", //added
                 "Update Employee Role", //added
-                "View All Roles",
-                "Add Role",
+                "View All Roles", //added
+                "Add Role", //added
                 "View All Departments",
                 "Add Department",
                 "Exit Application"
@@ -134,7 +134,7 @@ function addEmployees() {
                 return employee.first_name + employee.last_name === res.manager;
             }) [0];
             const manager_id = manager ? manager.id : null;
-            db.query('add employee', 
+            db.query('insert into employee set ?', 
             {
                 first_name,
                 last_name,
@@ -199,6 +199,42 @@ function addRole() {
             if (err)
                 throw err;
             const departments = result.map(department => department.name);
+            inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'title',
+                    message: 'What is the title of the new role? '
+                },
+                {
+                    type: 'input',
+                    name: 'salary',
+                    message: 'What is the salary of this new role? (in $) ', 
+                },
+                {
+                    type: 'list',
+                    name: 'department',
+                    message: 'What department is this role in? ',
+                    choices: departments
+                }
+            ]).then ((res) => {
+                const {title} = res;
+                const salary = res.salary;
+                const department_id = res.department_id;
+            })[0];
+
+            db.query(
+                'insert into role set ?',
+                {
+                    title,
+                    salary,
+                    department_id
+                },
+                (err, result) => {
+                    if(err)
+                        throw err;
+                    app();
+                }
+            )
         }
     )
 }
