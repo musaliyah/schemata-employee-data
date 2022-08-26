@@ -7,7 +7,8 @@ const cfonts = require('cfonts');
 
 const db = mysql.createConnection({
     host: 'localhost',
-    port: '3001',
+    // ref: https://kinsta.com/knowledgebase/mysql-port/
+    port: '3306',
     user: 'root',
     password: 'teddyfreddy',
     database: 'employee_DB'
@@ -15,8 +16,8 @@ const db = mysql.createConnection({
 });
 // askbcs tutor (Mia) 
 db.connect(function (err) {
-    if (err) throw err;
-    app();
+    if (err) 
+        throw err;
   });
 //https://www.npmjs.com/package/cfonts
 cfonts.say('Schemata,|my|Employee|Data!', {
@@ -38,9 +39,9 @@ function app() {
             message: 'What would you like to do?',
             name: 'start',
             choices: [
-                "View All Employees",
-                "Add Employee",
-                "Update Employee Role",
+                "View All Employees", //added
+                "Add Employee", //added
+                "Update Employee Role", //added
                 "View All Roles",
                 "Add Role",
                 "View All Departments",
@@ -86,14 +87,14 @@ function viewEmployees() {
     const query = 'select * from employee';
     db.query(query, (err, res) => {
         if (err)
-        throw (err);
+            throw (err);
         console.log(table(toTableFormat(res)));
         start();
     });
 }
 
 function addEmployees() {
-    db.query('select * from employee', (err, res) => {
+    db.query('SELECT * FROM employee_db', (err, res) => {
         const employees = res.map(employee => {
             return employee.first_name + employee.last_name
         });
@@ -142,7 +143,7 @@ function addEmployees() {
             },
             (err, result) => {
                 if (err)
-                throw err;
+                    throw err;
             }
 
             )
@@ -152,5 +153,52 @@ function addEmployees() {
     })
 }
 
+function updateEmployees() {
+    const query = 'SELECT * FROM employee_db';
+    db.query(query, (err, res) => {
+        const employees = res.map(employee => {
+            return employee.first_name + employee.last_name;
+        });
+        db.query('SELECT * FROM roles', (err, result) => {
+            const roles = result.map(roles => {
+                return roles.title;
+            });
+            inquirer.prompt([
+                {
+                    type:'list',
+                    name: 'employee',
+                    message: 'Select employee to update their role: ',
+                    choices: roles 
+                }
+            ]).then(answer => {
+                const id = result.filter(employee => {
+                    return employee.first_name + employee.last_name === answer.employee;
+                })[0]
+                db.query(
+                    'update employee set role_id = ? where id = ?', [role_id, id], (err, result) => {app();}
+                )
+            })
+        })
+    })
+};
+
+function viewAllRoles() {
+    const query = 'SELECT * FROM role';
+    db.query(query, (err, res) => {
+        if(err) 
+            throw err;
+        console.log(table(toTableFormat(res)));
+        app();
+    });
+}
 
 
+function addRole() {
+    db.query(
+        'SELECT * FROM department', (err, result) => {
+            if (err)
+                throw err;
+            const departments = result.map(department => department.name);
+        }
+    )
+}
