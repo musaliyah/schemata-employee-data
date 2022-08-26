@@ -69,8 +69,20 @@ function app() {
             case "Exit Application":
                 exit();
                 break;
+            default:
+                throw new Error("Unrecognized selection");
         }
     })
+}
+
+function viewEmployees() {
+    const query = 'select * from employee';
+    db.query(query, (err, res) => {
+        if (err)
+        throw (err);
+        console.log(table(toTableFormat(res)));
+        start();
+    });
 }
 
 //I spent way too long trying to decide what cFont layout I wanted to use lol, please know I put my whole heart into this selection :D 
