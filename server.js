@@ -54,7 +54,21 @@ function app() {
             case "Update Employee Role":
                 updateEmployees();
                 break;
-            case
+            case "View All Roles":
+                viewAllRoles();
+                break;
+            case "Add Role":
+                addRole();
+                break;
+            case "View All Departments":
+                viewDepartments();
+                break;
+            case "Add Department":
+                addDepartment();
+                break;
+            case "Exit Application":
+                exit();
+                break;
         }
     })
 }
