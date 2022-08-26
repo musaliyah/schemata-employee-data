@@ -26,7 +26,25 @@ cfonts.say('Schemata,|my|Employee|Data!', {
 }); 
 
 
-function app()
+function app() {
+    inquirer.createPromptModule([
+        {
+            type: 'list',
+            message: 'What would you like to do?',
+            name: 'start',
+            choices: [
+                "View All Employees",
+                "Add Employee",
+                "Update Employee Role",
+                "View All Roles",
+                "Add Role",
+                "View All Departments",
+                "Add Department",
+                "Exit Application"
+            ]
+        }
+    ]).then((answer))
+}
 
 //I spent way too long trying to decide what cFont layout I wanted to use lol, please know I put my whole heart into this selection :D 
 
