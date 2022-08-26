@@ -87,10 +87,44 @@ function viewEmployees() {
 }
 
 function addEmployees() {
-    db.query('select* from employee', (err, res) => {
+    db.query('select * from employee', (err, res) => {
         const employees = res.map(employee => {
             return employee.first_name + employee.last_name
         });
+    db.query('select * from role', (err, res) => {
+        const roles = res.map(role => {
+            return role.title;
+        });
+        inquirer.prompt([
+            {
+                type: 'input',
+                name: 'first_name',
+                message: 'Enter employee first name: '
+            },
+            {
+                type: 'input',
+                name: 'last_name',
+                message: 'Enter employee last name: '
+            },
+            {
+                type: 'list',
+                message: 'Choose employee role: ',
+                name: 'role_id',
+                choice: roles
+            },
+            {
+                type: 'list',
+                message: 'Choose the manager of the employee',
+                choices: employees
+            },
+
+        ]).then((res) => {
+            const {
+                first_name,
+                last_name
+            } = res;
+        })
+    })
     })
 }
 
