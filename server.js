@@ -74,6 +74,7 @@ function app() {
         }
     })
 }
+app();
 
 function viewEmployees() {
     const query = 'select * from employee';
@@ -83,6 +84,14 @@ function viewEmployees() {
         console.log(table(toTableFormat(res)));
         start();
     });
+}
+
+function addEmployees() {
+    db.query('select* from employee', (err, res) => {
+        const employees = res.map(employee => {
+            return employee.first_name + employee.last_name
+        });
+    })
 }
 
 //I spent way too long trying to decide what cFont layout I wanted to use lol, please know I put my whole heart into this selection :D 
