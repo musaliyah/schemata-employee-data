@@ -45,7 +45,7 @@ function app() {
                 "View All Roles", //added
                 "Add Role", //added
                 "View All Departments", //added
-                "Add Department",
+                "Add Department", //added
                 "Exit Application"
             ]
         }
@@ -248,3 +248,19 @@ function viewDepartments (){
         app();
     });
 };
+
+function addDepartment (){
+    inquirer.prompt({
+        type: 'input',
+        name: 'name',
+        message: 'What is the name of the new department? '
+    }).then(({name}) => 
+    {
+        const query = 'insert into departent (name) values (?)';
+        db.query(query, name, (err, res) => {
+            if(err)
+                throw err;
+            app();
+        })
+    })
+}
