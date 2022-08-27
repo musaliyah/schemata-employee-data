@@ -44,7 +44,7 @@ function app() {
                 "Update Employee Role", //added
                 "View All Roles", //added
                 "Add Role", //added
-                "View All Departments",
+                "View All Departments", //added
                 "Add Department",
                 "Exit Application"
             ]
@@ -238,3 +238,13 @@ function addRole() {
         }
     )
 }
+
+function viewDepartments (){
+    const query = 'SELECT * FROM department';
+    db.query(query, (err, res) => {
+        if (err)
+            throw err;
+        console.log(table(toTableFormat(res)));
+        app();
+    });
+};
