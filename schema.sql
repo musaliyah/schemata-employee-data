@@ -15,8 +15,6 @@ CREATE TABLE roles (
     department_id INT,
     FOREIGN KEY (department_id)
         REFERENCES department (id)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
 );
 
 
@@ -28,13 +26,13 @@ CREATE TABLE employee (
     manager_id INT NULL,
 
     FOREIGN KEY (role_id)
-        REFERENCES roles(id)
-        ON DELETE RESTRICT
-        ON UPDATE CASCADE,
+        REFERENCES roles(id),
 
     FOREIGN KEY (manager_id)
     REFERENCES employee(id)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE
-)
+);
 
+SELECT employee.id, first_name, last_name, title, salary, department_name
+FROM employee
+INNER JOIN role
+ON employee.role_id = role.id
