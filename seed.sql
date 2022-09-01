@@ -20,11 +20,11 @@ VALUES
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES 
-("Walter", "White", 2, 3),
-("Gus", "Fring", 3, 4),
-("Saul", "Goodman", 4, 2),
-("Jesse", "Pinkman", 2, 1),
-("Skyler", "White", 1, 4),
-("Mike", "Ehrmantraut", 3, 2);
+("Walter", "White", 1, NULL),
+("Gus", "Fring", 2, 1),
+("Saul", "Goodman", 3, 2),
+("Jesse", "Pinkman", 4, 3),
+("Skyler", "White", 5, 4),
+("Mike", "Ehrmantraut", 6, 5);
 
 
