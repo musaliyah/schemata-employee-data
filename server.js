@@ -187,8 +187,8 @@ function addRole() {
 }
 
 function viewEmployees() {
-    // const query = 'select * from employee';
-    connection.query('SELECT * FROM employee', (err, res) => {
+    const query = 'select * from employee';
+    connection.query(query, (err, res) => {
         if (err)
             throw (err);
             console.table(res);
