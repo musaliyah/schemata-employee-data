@@ -192,6 +192,7 @@ function viewEmployees() {
         if (err)
             throw (err);
             console.table(res);
+        // console.log(table(toTableFormat(res)));
         app();
     });
 }
@@ -266,3 +267,8 @@ function updateEmployees() {
 
 
 
+// function toTableFormat(arr) {
+//     const header = Object.keys(arr[0]);
+//     const rows = arr.map(obj => Object.values(obj));
+//     return [header, ...rows];
+// }
