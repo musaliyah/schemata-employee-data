@@ -119,31 +119,14 @@ function addEmployees() {
             {
                 type: 'list',
                 message: 'Choose the manager of the employee',
+                name: 'manager_id',
                 choices: employeeData
             },
 
         ]).then((res) => {
-            const {first_name, last_name} = res;
-            const role_id = roles.filter(roles => {
-                return roles.title === res.roles;
-            }) [0];
-            const manager = res.filter(employee => {
-                return employee.first_name + '' + employee.last_name === res.manager;
-            }) [0];
-            const manager_id = manager ? manager.id : null;
-            connection.query('INSERT INTO employee set ?', 
-            {
-                first_name,
-                last_name,
-                role_id, 
-                manager_id
-            },
-            (err, result) => {
-                if (err)
-                    throw err;
-            }
-
-            )
+            
+            connection.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)',[res.first_name, res.last_name, res.role_id, res.manager], (res) => {console.table(res)})
+            console.table(res);
             app();
         })
     })
@@ -153,32 +136,31 @@ function addEmployees() {
 function addDepartment (){
     inquirer.prompt({
         type: 'input',
-        name: 'name',
+        name: 'depName',
         message: 'What is the name of the new department? '
     }).then((answer) => 
     {
         
-        connection.query(`INSWERT INTO department (name) VALUES (?)`, answer.name, (err, res) => 
+        connection.query(`INSERT INTO department (names) VALUES (?)`, answer.depName, (err, res) => 
         {
             if (err) {
                 console.log(err);
             }
-            console.table(res);
-            app();
-        })
+            viewDepartments();
+
+        });
     })
 }
 
 function addRole() {
-    connection.query(
-        'SELECT * FROM department', (err, res) => {
+    connection.query('SELECT * FROM department', (err, res) => {
             if (err)
                 throw err;
-            const departments = res.map(department => department.name);
+            const departmentsData = res.map(department => {return department.id, department.name});
             inquirer.prompt([
                 {
                     type: 'input',
-                    name: 'title',
+                    name: 'name',
                     message: 'What is the title of the new role? '
                 },
                 {
@@ -190,27 +172,16 @@ function addRole() {
                     type: 'list',
                     name: 'department',
                     message: 'What department is this role in? ',
-                    choices: departments
+                    choices: departmentsData 
                 }
             ]).then ((res) => {
-                // const title = res;
-                const salary = res.salary;
-                const department_id = res.department_id;
-            })[0];
-
-            connection.query(
-                'insert into roles set ?',
-                {
-                    title,
-                    salary,
-                    department_id
-                },
-                (err, result) => {
-                    if(err)
-                        throw err;
-                    app();
-                }
-            )
+                connection.query(`INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)`, [res.name, res.salary, res.department], (err, res) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    viewAllRoles();
+                })
+            })
         }
     )
 }
@@ -221,7 +192,6 @@ function viewEmployees() {
         if (err)
             throw (err);
             console.table(res);
-        // console.log(table(toTableFormat(res)));
         app();
     });
 }
@@ -262,7 +232,13 @@ function updateEmployees() {
                     type:'list',
                     name: 'employee',
                     message: 'Select employee to update their role: ',
-                    choices: roles 
+                    choices: employeeData
+                },
+                {
+                    type: 'list',
+                    name: 'newRole',
+                    message: 'Assign new role to the employee: ',
+                    choices: roles
                 }
             ]).then(answer => {
                 const id = res.filter(employee => {
@@ -271,7 +247,10 @@ function updateEmployees() {
             
                 })[0]
                 connection.query(
-                    'UPDATE employees SET role_id = ? WHERE id = ?', [roles, id], (err, result) => {app();}
+                    'UPDATE employees SET role_id = ? WHERE id = ?', [roles, id], (err, result) => {app();
+                    console.log('New role assigned to employee!')
+                    viewEmployees();
+                }
                 )
             })
         })
@@ -287,8 +266,3 @@ function updateEmployees() {
 
 
 
-// function toTableFormat(arr) {
-//     const header = Object.keys(arr[0]);
-//     const rows = arr.map(obj => Object.values(obj));
-//     return [header, ...rows];
-// }
