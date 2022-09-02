@@ -156,7 +156,7 @@ function addRole() {
     connection.query('SELECT * FROM department', (err, res) => {
             if (err)
                 throw err;
-            const departmentsData = res.map(department => {return department.id, department.name});
+            const departmentsData = res.map(department => { return department.id, department.name});
             inquirer.prompt([
                 {
                     type: 'input',
@@ -174,13 +174,14 @@ function addRole() {
                     message: 'What department is this role in? ',
                     choices: departmentsData 
                 }
-            ]).then ((res) => {
-                connection.query(`INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)`, [res.name, res.salary, res.department], (err, res) => {
+            ]).then ((result) => {
+                connection.query(`INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)`, [result.name, result.salary, result.department], (err, res) => {
                     if (err) {
                         console.log(err);
                     }
+                    console.table(res)
                     viewAllRoles();
-                })
+                });
             })
         }
     )
