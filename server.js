@@ -92,11 +92,17 @@ function addEmployees() {
     connection.query('SELECT * FROM employee', (err, res) => {
         if (err) throw err;
         const employeeData = res.map(employee => {
-            return employee.first_name + '' + employee.last_name;
+           return {
+            value: employee.id,
+            name: employee.first_name + ' ' + employee.last_name
+           }
         });
     connection.query('SELECT * FROM roles', (err, res) => {
         const roleData = res.map(roles => {
-            return roles.title, roles.id;
+           return {
+            value: roles.id,
+            name: roles.title
+           }
             
         });
         inquirer.prompt([
@@ -141,7 +147,7 @@ function addDepartment (){
     }).then((answer) => 
     {
         
-        connection.query(`INSERT INTO department (names) VALUES (?)`, answer.depName, (err, res) => 
+        connection.query(`INSERT INTO department (name) VALUES (?)`, answer.depName, (err, res) => 
         {
             if (err) {
                 console.log(err);
@@ -156,7 +162,10 @@ function addRole() {
     connection.query('SELECT * FROM department', (err, res) => {
             if (err)
                 throw err;
-            const departmentsData = res.map(department => { return department.id, department.name});
+            const departmentsData = res.map(department => { 
+              return {value: department.id, 
+                name: department.name}
+            });
             inquirer.prompt([
                 {
                     type: 'input',
@@ -223,7 +232,7 @@ function viewDepartments (){
 function updateEmployees() {
     connection.query('SELECT * FROM employee', function (err, res) {
         const employeeData = res.map(employee => {
-            return {name: employee.first_name + '' + employee.last_name}
+            return {name: employee.first_name + ' ' + employee.last_name}
         });
         connection.query('SELECT * FROM roles', (err, res) => {
             const roles = res.map(roles => {
