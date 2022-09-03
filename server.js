@@ -131,8 +131,12 @@ function addEmployees() {
 
         ]).then((res) => {
             
-            connection.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)',[res.first_name, res.last_name, res.role_id, res.manager], (res) => {console.table(res)})
-            console.table(res);
+            connection.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)',[res.first_name, res.last_name, res.role_id, res.manager], (err, res) => { if (err) {console.log(err)}
+            console.log(res);
+            viewEmployees();
+        
+        })
+            // console.table(res);
             app();
         })
     })
@@ -224,7 +228,7 @@ function viewDepartments (){
         if (err)
             throw err;
             console.table(res);
-        // console.log(table(toTableFormat(res)));
+
         app();
     });
 };
@@ -274,11 +278,3 @@ function updateEmployees() {
 
 
 
-
-
-
-// function toTableFormat(arr) {
-//     const header = Object.keys(arr[0]);
-//     const rows = arr.map(obj => Object.values(obj));
-//     return [header, ...rows];
-// }
