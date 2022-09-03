@@ -151,7 +151,7 @@ function addDepartment (){
     }).then((answer) => 
     {
         
-        connection.query(`INSERT INTO department (name) VALUES (?)`, answer.depName, (err, res) => 
+        connection.query(`INSERT INTO department (names) VALUES (?)`, answer.depName, (err, res) => 
         {
             if (err) {
                 console.log(err);
@@ -206,7 +206,7 @@ function viewEmployees() {
         if (err)
             throw (err);
             console.table(res);
-        // console.log(table(toTableFormat(res)));
+       
         app();
     });
 }
@@ -216,7 +216,7 @@ function viewAllRoles() {
     connection.query(query, (err, res) => {
         if(err) 
             throw err;
-        // console.log(table(toTableFormat(res)));
+       
         console.table(res);
         app();
     });

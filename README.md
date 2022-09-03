@@ -16,6 +16,8 @@
   ## Installation: 
   To install "Schemata, my Employee Data!" Users must first clone my repo from GitHub, and have MySQL installed within their own device. Then, after installing MySQL and having my files on their own device, users can open an integrated terminal by right-clicking on the server.js file. After opening an integrated terminal, then user's must launch MySQL by typing "MySQL -u root -p" in the CLI and fill out their own password. Then, they must seed the SQL files. To seed the files, user's must type "source schema.sql" and "source seed.sql" in their terminal. After seeding the files, users can quit MySQL by typing "quit" and pressing enter. Lastly, to begin navigating the database, users must type "node server.js" into the terminal, and they should be presented with prompts. 
 
+![Untitled_ Sep 2, 2022 7_32 PM](https://user-images.githubusercontent.com/105015206/188252576-747813a0-44ab-4a88-99ab-2b4d83b41fc4.gif)
+
   ## Usage: 
   To use the program, users can select amongst the various options, and type information that responds to the prompt. Importantly, when it comes to assigning new salary amounts, user's must only type out integers (no commas). To quit the program, select "quit" from the menu.
 
